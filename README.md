@@ -1,72 +1,105 @@
 # Amazon-Customer-Coupon
-Checking the Python and data analysis/cleaning/decision techniques using Pandas and Seaborn visualization concepts.
 
 
-3 Compare the acceptance rate between those who went to a bar 3 or fewer times a month to those who went more.
-# ==========Analytical Insights & Comparison
+Coupon Acceptance Data Analysis
 
-In the In-Vehicle Coupon Recommendation dataset, comparing these two segments reveals a strong behavioral divide:
+This repository contains an assignment for the ML class built using Python in a Google Colab environment. The project analyzes driving and demographic factors to evaluate what drives driver to accept various types of coupons (Bar, Coffee House, Carry Out, Restaurants).
 
-    Frequent Bar Goers (> 3 times/month): Have an acceptance rate of approximately 76.8%. Customers who regularly visit bars are significantly more responsive to bar coupon promotions.
+Overview
 
-    Infrequent/Non-Bar Goers (≤ 3 times/month): Have an acceptance rate of approximately 37.1%.
+When driving, coupons are offered to drivers based on various factors (weather, destination, time, accompanying passengers) and demographic details (age, gender, income).
 
-    Key Finding: Customers who visit bars more than 3 times a month are more than twice as likely to accept a bar coupon compared to those who visit 3 or fewer times a month. Prior habit and product context drive coupon conversion much more than the promotional discount alone.
+The primary goals are:
 
-4.     Comparison & Findings
+    Data Cleaning & Preprocessing: Mount cloud storage, query missing attributes, correct typos, handle NaN values, and normalize features.
 
-    Drivers who visit bars > 1/month AND are over 25: Acceptance rate is approximately 69.5%.
+    Data Analysis: Identify distributions across demographic variables (age, gender, marital status) and behavioral/visitation habits (frequency of visiting coffee houses, bars, carry-out spots).
 
-    All other drivers: Acceptance rate is approximately 33.5%.
+    Target Analysis: Measure overall acceptance rate (Coupon Used) across various types.
 
-Is there a difference?
+    Data Visualization: Produce clear visual reports using static (matplotlib, seaborn) and interactive (plotly) graphing libraries.
 
-Yes, there is a substantial difference. Drivers who visit a bar more than once a month and are over the age of 25 are more than twice as likely to accept a bar coupon compared to all other drivers in the dataset—a positive difference of over 35 percentage points.
+Dataset Summary
 
-This demonstrates that combining behavioral frequency (visiting bars regularly) with demographic age filters (over 25) creates a highly responsive target segment for bar promotions.
+    Records / Rows: 12,684
 
-5 Comparison & Key Takeaway
+    Features / Columns: 26
 
-    Target Segment (Bar > 1/mo + Adult/Partner Passenger + Non-Farming/Forestry Occupation): Acceptance rate is approximately 71.3%.
+    Source File: /data/coupons.csv
 
-    All Other Drivers: Acceptance rate is approximately 37.7%.
+Key Variables Analyzed:
 
-Summary
+    CouponUsed (formerly Y): Binary target variable (1 = Accepted, 0 = Rejected).
 
-Yes, there is a substantial difference. Drivers carrying adult passengers or partners who regularly visit bars accept bar coupons at nearly double the rate (~33.6 percentage points higher) compared to all other driver profiles. Having adult companions in the vehicle acts as a strong social catalyst for accepting impulse bar recommendations.
+    passenger (renamed from passanger): Driver context (Alone, Friend(s), Partner, Kid(s)).
 
-6 
-Target Combination Segment: Shows an overall acceptance rate of approximately 58.8% to 62.2% (depending on exact missing-value imputation strategy).
+    destination: Driver travel context (No Urgent Place, Home, Work).
 
-All Others: Shows an acceptance rate of approximately 29.5% to 31.0%.
+    coupon: Category of coupon offered (Coffee House, Restaurant(<20), Carry out & Take away, Bar, Restaurant(20-50)).
 
-Takeaway: Broadening the criteria by combining frequent bar goers (with peers or younger drivers) alongside budget-conscious frequent diners (< $50K income) captures a much larger target segment (~60–70% of total bar coupon recipients) while still maintaining a significantly higher conversion rate (~30 percentage points higher) compared to the remaining population.
+    weather & temperature: Environmental conditions (Sunny, Rainy, Snowy; temperatures 30°F, 55°F, 80°F).
 
-7
-1. Habitual Behavior is the Strongest Predictor
+    Behavioral Frequency Columns: Bar, CoffeeHouse, CarryAway, RestaurantLessThan20, Restaurant20To50 (tracking frequency of visits per month).
 
-    Hypothesis: Prior habits heavily outweigh the promotional offer itself.
+Dependencies
 
-    Evidence: Drivers who already visit bars more than 3 times a month accepted coupons at an overwhelming rate (~76.8%), compared to just ~37.1% for those visiting 3 or fewer times. A coupon rarely creates new habits, but it acts as a strong incentive for existing behaviors.
+Ensure you have the following Python libraries installed before running the notebook:
+install pandas numpy matplotlib seaborn plotly
 
-2. Social Context & Companion Dynamics Act as Catalysts
+Note: Google Colab comes pre-installed with all required packages except specific driver mounts.
 
-    Hypothesis: Drivers traveling with adult companions (friends or partners) are far more open to spontaneous bar detours than solo drivers or those with children.
+Getting Started & Execution
 
-    Evidence: Drivers visiting bars regularly with non-child passengers achieved a ~71.3% acceptance rate. The presence of peers creates a social setting where accepting a bar recommendation aligns with group activity, whereas traveling with kids naturally acts as a barrier.
+    Upload Dataset: Place coupons.csv in your Google Drive under /MyDrive/Colab Notebooks/data/.
 
-3. Age & Lifestyle Maturity Drive Conversion
+    Open Notebook: Open the .ipynb file in Google Colab or Jupyter Notebook.
 
-    Hypothesis: Drivers over 25 who already frequent bars represent a prime high-converting demographic due to greater financial independence and established social routines.
+    Mount Drive & Run: Run all notebook cells sequentially:
+    Python
 
-    Evidence: The combination of regular bar visits and being over age 25 yielded a ~69.5% acceptance rate (compared to ~33.5% for all other drivers).
+    from google.colab import drive
+    drive.mount('/content/drive')
 
-4. Value-Sensitivity among Young/Budget Drivers Broadens Reach
+Workflow & Methodology
 
-    Hypothesis: While frequent high-income bar goers drive top conversion, younger drivers (<30) and budget-conscious, frequent value-diners (<$50K income) form a second, highly responsive audience seeking promotional savings.
+    Drive Connection & Loading:
 
-    Evidence: Combining frequent bar goers, younger drivers, and frequent low-income diners captured a much broader pool of drivers while still maintaining a ~59–62% acceptance rate (~30 percentage points higher than the baseline remnant group).
+        Mount Google Drive and load /data/coupons.csv into a Pandas DataFrame (masterdata).
 
-Key Strategic Takeaway
+    Data Cleaning & Standardization:
 
-Targeting Efficiency over Broad Reach: Bar coupons sent indiscriminately yield near-random conversion (~50% overall), but routing coupons specifically to drivers with a history of bar visits, traveling with peers, or fitting a young/social demographic boosts conversion rates to 70%+.
+        Renamed target output Y → CouponUsed.
+
+        Fixed typographical errors: passanger → passenger.
+
+        Identified  missing data in car (12,576 missing records out of 12,684).
+
+        Filled missing categorical entries in visit frequencies with 'never'.
+
+     Visualizations:
+
+        Visualized overall coupon acceptance breakdown via pie charts.
+
+        Evaluated acceptance grouped by coupon types across age and gender distributions.
+
+        Histogram distribution across ambient temperature readings.
+
+    Sub-segment Analysis:
+
+        Filtered dataset subsets specifically targeting driver responses to Bar coupons (n=2,017).
+
+💡 Preliminary Insights
+
+    Overall Acceptance Rate: ~56.8% of coupons offered were accepted (7,210 accepted vs. 5,474 rejected).
+
+    Most Frequently Offered Coupons:
+
+        Coffee House (3,996)
+
+        Restaurant (<20) (2,786)
+
+        Carry out & Take away (2,393)
+
+    Weather Context: The overwhelming majority of driving observations occurred during Sunny weather (10,069 records) at 80°F (6,528 records).
+
+ 
