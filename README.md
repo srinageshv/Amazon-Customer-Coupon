@@ -1,4 +1,4 @@
-# Amazon-Customer_Coupon-Studey
+# Amazon-Customer-Coupon
 Checking the Python and data analysis/cleaning/decision techniques using Pandas and Seaborn visualization concepts.
 
 
